@@ -28,7 +28,7 @@ def download_song(title, artist):
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([f"ytsearch1:{query}"])
 
-    print(f"Downloaded and converted to MP3: {title} - {artist}.mp3")
+    print(f"Downloaded: {title}.mp3")
     return f'{PATH}{title}.mp3'
 
 
@@ -63,8 +63,26 @@ def get_playlist_tracks(playlist_id, access_token):
     return tracks_info
 
 
+def get_album_tracks(album_id, access_token):
+    url = f'https://api.spotify.com/v1/albums/{album_id}/tracks'
+    headers = {
+        'Authorization': 'Bearer ' + access_token
+    }
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        tracks = response.json()['items']
+        tracks_info = []
+        for track in tracks:
+            tracks_info.append(get_track_info(track['id'], access_token))
+    else:
+        raise Exception(f"Failed to get track info: {response.status_code}")
+
+    return tracks_info
+
+
 def get_track_info(track_id, access_token):
-    inv_char = re.compile(r'\|/*?"<>:')
+    inv_char = ('\\', '|', '/', '*', '?', '"', '<', '>', ':')
     url = f'https://api.spotify.com/v1/tracks/{track_id}'
     headers = {
         'Authorization': 'Bearer ' + access_token
@@ -73,8 +91,8 @@ def get_track_info(track_id, access_token):
     if response.status_code == 200:
         tracks_info = []
         data = response.json()
-        titolo = data['name']
-        titolo = inv_char.sub('', titolo)
+        # titolo = data['name']
+        titolo = ''.join([char for char in data['name'] if char not in inv_char])
         f = ""
         if len(data['artists']) > 1:
             artista = data['artists'][0]['name']
@@ -116,14 +134,19 @@ while True:
         lista_link.append(input("Link: "))
 
     access_token = get_access_token(CLIENT_ID, CLIENT_SECRET)
-    for link in tqdm(lista_link):
+    for link in tqdm(lista_link[:-1]):
         if 'playlist' in link:
             playlist_id = link.split('/')[-1].split('?si=')[0]
             info = get_playlist_tracks(playlist_id, access_token)
-            for track in info:
+            for track in tqdm(info):
                 info_mod(track[0])
+
+        elif 'album' in link:
+            album_id = link.split('/')[-1].split('?si=')[0]
+            info = get_album_tracks(album_id, access_token)
+
         elif 'track' in link:
             track_id = link.split('/')[-1].split('?si=')[0]
             info = get_track_info(track_id, access_token)
-            for track in info:
+            for track in tqdm(info):
                 info_mod(track)
