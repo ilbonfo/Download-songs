@@ -4,12 +4,8 @@ import yt_dlp
 import re
 
 from tqdm import tqdm
+from ID_SECRET import CLIENT_ID, CLIENT_SECRET
 from mutagen.easyid3 import EasyID3
-
-with open("ID SECRET", 'r') as f:
-    f = f.read().split(',')
-    CLIENT_ID = f[0]
-    CLIENT_SECRET = f[1]
 
 PATH = "C:\\Users\\stebo\\Music\\"
 
@@ -113,28 +109,9 @@ def info_mod(info):
 
 
 while True:
-    # lista_link = [input("Link: ")]
-    # while lista_link[-1] != '':
-    #     lista_link.append(input("Link: "))
-    lista_link = ["https://open.spotify.com/playlist/6cal66UTDBHGXtmELAfu76?si=3ed1f7e52fae4360",
-                    "Link: https://open.spotify.com/playlist/6puoPusc1CRUDtMla2U80e?si=c7e6cf53806e467d",
-                    "Link: https://open.spotify.com/playlist/37i9dQZF1Fa1IIVtEpGUcU?si=04cad88e2a3447ab",
-                    "Link: https://open.spotify.com/playlist/37i9dQZF1EpeQIbBqhSG9q?si=43a22f4d7ca64516",
-                    "Link: https://open.spotify.com/playlist/37i9dQZF1DZ06evO2sU4ED?si=636563d56d76465a",
-                    "Link: https://open.spotify.com/playlist/1r1suTylUOXSUdNC2Ep6QX?si=db73baac24064d56",
-                    "Link: https://open.spotify.com/playlist/2vt8lgocuLGSVEJSblEdQx?si=aa3f7566655c439f",
-                    "Link: https://open.spotify.com/playlist/37i9dQZF1DZ06evO2zAbsY?si=14be2c67c30b4543",
-                    "Link: https://open.spotify.com/playlist/37i9dQZF1DZ06evO0b6iPl?si=02605b3c55114536",
-                    "Link: https://open.spotify.com/playlist/3GPi12hegeqHCedgOpLAaE?si=73ab05e2997549b4",
-                    "Link: https://open.spotify.com/playlist/58AdN0tSbj5hlRZtqARaLk?si=906c890d78c242d4",
-                    "Link: https://open.spotify.com/playlist/2AcAsf54X04oQuBPFqhCjp?si=a7d54a5edb4c48fd",
-                    "Link: https://open.spotify.com/playlist/7l6FvVcTBvoLtt8JOAb8kB?si=1b0da6f4078945a7",
-                    "Link: https://open.spotify.com/playlist/0ZBIxnLRxlTk7g197TtyAn?si=ee808e6d385049b0",
-                    "Link: https://open.spotify.com/playlist/4UCCl8dmpKLRtRqRyBmCJR?si=4993058ad00648cb",
-                    "Link: https://open.spotify.com/playlist/37i9dQZF1DZ06evO0Cqn9B?si=dcbb7f48a8874fe2",
-                    "Link: https://open.spotify.com/playlist/37i9dQZF1DZ06evO1U2qlO?si=623e7538a1c444b4",
-                    "Link: https://open.spotify.com/playlist/37i9dQZF1DZ06evO4qkT7M?si=5cd769fe8c9d44ea",
-                    "Link: https://open.spotify.com/playlist/37i9dQZF1DZ06evO2cwh9e?si=b5bf4ab89f2e4b98"]
+    lista_link = [input("Link: ")]
+    while lista_link[-1] != '':
+        lista_link.append(input("Link: "))
 
     access_token = get_access_token(CLIENT_ID, CLIENT_SECRET)
     for link in tqdm(lista_link):
