@@ -124,6 +124,8 @@ def info_mod(info):
             audio['title'] = titolo
             audio['artist'] = feat
             audio.save()
+        else:
+            print(f"{titolo} già scaricato")
     except Exception as e:
         print(e)
 
@@ -144,6 +146,8 @@ while True:
         elif 'album' in link:
             album_id = link.split('/')[-1].split('?si=')[0]
             info = get_album_tracks(album_id, access_token)
+            for track in tqdm(info):
+                info_mod(track[0])
 
         elif 'track' in link:
             track_id = link.split('/')[-1].split('?si=')[0]
