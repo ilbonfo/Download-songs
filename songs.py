@@ -6,12 +6,11 @@ import re
 from tqdm import tqdm
 from mutagen.easyid3 import EasyID3
 
-# with open("ID SECRET", 'r') as f:
-#     f = f.read().split(',')
-#     CLIENT_ID = f[0]
-#     CLIENT_SECRET = f[1]
-CLIENT_ID = '8b6f403aa7014cb4999288d6c7fef893'
-CLIENT_SECRET = '5335d5854d28453bbc818bf595da2acd'
+with open("ID SECRET", 'r') as f:
+    f = f.read().split(',')
+    CLIENT_ID = f[0]
+    CLIENT_SECRET = f[1]
+
 PATH = "C:\\Users\\stebo\\Music\\"
 
 
