@@ -2,12 +2,13 @@ import requests
 import base64
 import yt_dlp
 import re
+import os
 
 from tqdm import tqdm
 from ID_SECRET import CLIENT_ID, CLIENT_SECRET
 from mutagen.easyid3 import EasyID3
 
-PATH = "C:\\Users\\stebo\\Music\\"
+PATH = f"C:\\Users\\{os.getlogin()}\\Music\\"
 
 
 def download_song(title, artist):
