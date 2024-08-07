@@ -98,13 +98,14 @@ def info_mod(info):
         artista = info[1]
         feat = info[2]
         album = info[3]
-        file = download_song(titolo, artista)
-        audio = EasyID3(file)
-        audio['albumartist'] = artista
-        audio['album'] = album
-        audio['title'] = titolo
-        audio['artist'] = feat
-        audio.save()
+        if not os.path.exists(f'{PATH}{titolo}.mp3'):
+            file = download_song(titolo, artista)
+            audio = EasyID3(file)
+            audio['albumartist'] = artista
+            audio['album'] = album
+            audio['title'] = titolo
+            audio['artist'] = feat
+            audio.save()
     except Exception as e:
         print(e)
 
